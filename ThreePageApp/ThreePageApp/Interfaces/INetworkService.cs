@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ThreePageApp.Services
+namespace ThreePageApp.Interfaces
 {
-	public interface INetworkService
-	{
+    public interface INetworkService
+    {
         Task<string> GetSSID(bool withMacAddress = true);
 
     }

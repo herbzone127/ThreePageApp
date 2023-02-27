@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Microsoft.Extensions.DependencyInjection;
+using ThreePageApp.Interfaces;
 using UIKit;
 
 namespace ThreePageApp.iOS
@@ -23,9 +25,14 @@ namespace ThreePageApp.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new App(AddService));
 
             return base.FinishedLaunching(app, options);
+        }
+
+        private void AddService(IServiceCollection services)
+        {
+            services.AddScoped<INetworkService, NetworkService>();
         }
     }
 }

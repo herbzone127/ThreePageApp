@@ -2,9 +2,16 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasBackButton="True"
     x:Class="ThreePageApp.Views.SecondPage">
     <ContentPage.Content>
-        
+        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Label
+                FontAttributes="Bold"
+                Text="enter the code to play." />
+            <Entry Text="{Binding Search}"/>
+            <Button Text="Submit" Command="{Binding Submit}"/>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
 

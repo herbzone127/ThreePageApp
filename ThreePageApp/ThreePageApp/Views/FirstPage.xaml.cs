@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
+using Microsoft.Extensions.DependencyInjection;
+using ThreePageApp.ViewModels;
 
 namespace ThreePageApp.Views
 {	
@@ -10,7 +11,8 @@ namespace ThreePageApp.Views
 		public FirstPage ()
 		{
 			InitializeComponent ();
-		}
+            BindingContext = App.ServiceProvider.GetService<FirstPageVM>();
+        }
 	}
 }
 

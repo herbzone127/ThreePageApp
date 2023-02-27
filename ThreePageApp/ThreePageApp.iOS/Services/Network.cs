@@ -4,15 +4,15 @@ using CoreLocation;
 using Foundation;
 using NetworkExtension;
 using SystemConfiguration;
+using ThreePageApp.Interfaces;
 using ThreePageApp.iOS.Services;
-using ThreePageApp.Services;
 using UIKit;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(NetworkService))]
 namespace ThreePageApp.iOS.Services
 {
-	public class NetworkService:INetworkService
+    public class NetworkService:INetworkService
 	{
         
 

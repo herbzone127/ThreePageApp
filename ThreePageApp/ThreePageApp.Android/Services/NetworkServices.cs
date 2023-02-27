@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using Android.Content;
 using Android.Net.Wifi;
 using ThreePageApp.Droid.Services;
-using ThreePageApp.Services;
+using ThreePageApp.Interfaces;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(NetworkService))]
 namespace ThreePageApp.Droid.Services
 {
-	public class NetworkService:INetworkService
+    public class NetworkService:INetworkService
 	{
 		public NetworkService()
 		{

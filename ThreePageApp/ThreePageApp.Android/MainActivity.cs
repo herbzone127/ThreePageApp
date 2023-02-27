@@ -4,6 +4,9 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Microsoft.Extensions.DependencyInjection;
+using ThreePageApp.Interfaces;
+using ThreePageApp.Droid.Services;
 
 namespace ThreePageApp.Droid
 {
@@ -16,13 +19,22 @@ namespace ThreePageApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+          
+            LoadApplication(new App(AddService));
         }
+
+        private void AddService(IServiceCollection services)
+        {
+          
+            services.AddScoped<INetworkService, NetworkService>();
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+     
     }
 }

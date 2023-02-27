@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ThreePageApp.Services;
+using ThreePageApp.Interfaces;
 using ThreePageApp.ViewModels.Base;
 using ThreePageApp.Views;
 using Xamarin.Essentials;
@@ -10,27 +10,47 @@ using Xamarin.Forms;
 
 namespace ThreePageApp.ViewModels
 {
-	public class FirstPageVM:BaseViewModel
+    public class FirstPageVM:BaseViewModel
 	{
-		public FirstPageVM()
+        private INetworkService _workService;
+        private INetworkStore _workStore;
+		public FirstPageVM(INetworkService networkService,INetworkStore networkStore)
 		{
+          
 			FirstLabel = "4F6I";
             NextCommand = new Command(NextCommandExecute);
-            Task.Run(async() => {
-                await RequestPermissionAsync().ContinueWith(async(Task t)=>{
-                    if (t.IsCompleted)
-                    {
-                        var result = await DependencyService.Get<INetworkService>().GetSSID();
-                        SecondLabel = result;
-                    }
-                });
-               
-            });
+            _workService = networkService;
+            _workStore = networkStore;
+            Initialize().ConfigureAwait(false);
                 
            
             
         }
+        public async Task Initialize()
+        {
+           
+                await RequestPermissionAsync().ContinueWith(async (Task t) => {
+                    if (t.IsCompleted)
+                    {
 
+                        var result = await _workService.GetSSID();
+                        //var result = await DependencyService.Get<INetworkService>().GetSSID();
+                        SecondLabel = result;
+                        var storedNetwork = await _workStore.GetNetworkByPwd(FirstLabel);
+                        if (storedNetwork == null)
+                        {
+                            var isAdded = await _workStore.SaveNetwork(new Models.NetworkStore
+                            {
+                                Ssid = result,
+                                Pwd = FirstLabel
+                            });
+
+                        }
+                    }
+                });
+
+           
+        }
         async Task RequestPermissionAsync()
         {
             var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
@@ -74,9 +94,9 @@ namespace ThreePageApp.ViewModels
         public ICommand NextCommand { get; set; }
         #endregion
         #region Methods
-        private void NextCommandExecute(object obj)
+        private async void NextCommandExecute(object obj)
         {
-            App.Current.MainPage.Navigation.PushAsync(new SecondPage());
+           await Application.Current.MainPage.Navigation.PushAsync(new NavigationPage(new SecondPage()));
         }
         #endregion
     }
