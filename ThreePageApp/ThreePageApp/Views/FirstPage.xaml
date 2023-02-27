@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ThreePageApp.ViewModels"
+    x:Class="ThreePageApp.Views.FirstPage">
+    <ContentPage.BindingContext>
+        <vm:FirstPageVM/>
+
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+<Grid
+    ColumnDefinitions="*,*"
+    RowDefinitions="*,*,*"
+    HorizontalOptions="CenterAndExpand"
+    VerticalOptions="CenterAndExpand">
+    <Label
+        Grid.Column="0" Grid.Row="0"
+        Text="First Label:" FontSize="18"
+        FontAttributes="Bold" />
+    <Label
+        Text="{Binding FirstLabel,Mode=TwoWay}"
+        Grid.Column="1"
+        Grid.Row="0"
+        FontSize="18" TextColor="Black"/>
+    <Label
+        Grid.Column="0"
+        Grid.Row="1"
+        Text="Second Label:" FontSize="18"
+        FontAttributes="Bold" />
+    <Label
+        Text="{Binding SecondLabel,Mode=TwoWay}"
+        Grid.Column="1"
+        Grid.Row="1"
+        FontSize="18" TextColor="Black"/>
+
+           <Button
+               Grid.Row="2"
+               Grid.ColumnSpan="2"
+               Text="Next" Command="{Binding NextCommand}" />
+
+</Grid>
+    </ContentPage.Content>
+</ContentPage>
+
